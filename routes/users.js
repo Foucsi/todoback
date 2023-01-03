@@ -8,8 +8,18 @@ const bcrypt = require("bcrypt");
 const User = require("../models/users");
 
 /* GET users listing. */
-router.get("/", function (req, res, next) {
-  res.send("respond with a resource");
+router.get("/:token", function (req, res) {
+  const token = req.params.token;
+  User.findOne({ token })
+    .then((users) => {
+      if (!users) {
+        res.status(404).json({ result: false });
+      }
+      res.json({ result: true, user: users });
+    })
+    .catch((err) => {
+      res.status(500).json({ result: false, error: err });
+    });
 });
 
 /* post a new user */
