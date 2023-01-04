@@ -13,6 +13,15 @@ router.get("/numberTodo/:token", (req, res) => {
   });
 });
 
+/* recupere le nombre d'element en favorites */
+
+router.get("/numberFavorites/:token", (req, res) => {
+  const token = req.params.token;
+  User.findOne({ token }).then((data) => {
+    res.json({ result: true, data: data.favorites.length });
+  });
+});
+
 /* ajoute un nouveau tweet au sous document todo avec le parametre token */
 router.post("/addTodo/:token", (req, res) => {
   const token = req.params.token;
