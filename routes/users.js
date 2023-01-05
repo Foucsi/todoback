@@ -40,6 +40,8 @@ router.post("/signup", (req, res) => {
         password: hash,
         token: uid2(32),
         tweets: [],
+        favorites: [],
+        photo: req.body.photo,
       });
 
       newUser.save().then((data) => {
@@ -62,6 +64,30 @@ router.post("/signin", (req, res) => {
     } else {
       res.json({ result: false, error: "User not found or wrong password" });
     }
+  });
+});
+
+/* route permettant de poster une photo */
+router.post("/addPhoto/:token", (req, res) => {
+  const token = req.params.token;
+  const photo = req.body.photo;
+  User.findOneAndUpdate({ token }, { $set: { photo: photo } })
+    .then((data) => {
+      if (!data) {
+        res.status(404).json({ result: false, error: "User note found" });
+      }
+      res.json({ result: true, data: data });
+    })
+    .catch((err) => {
+      res.status(500).json({ result: false, error: err });
+    });
+});
+
+/* route pour recuperer la photo */
+router.get("/photo/:token", (req, res) => {
+  const token = req.params.token;
+  User.findOne({ token }).then((data) => {
+    res.json({ result: true, data: data.photo });
   });
 });
 
