@@ -15,6 +15,7 @@ const userSchema = mongoose.Schema({
   token: String,
   todo: [todoSchema],
   favorites: [favoritesSchema],
+  photo: String,
 });
 
 const User = mongoose.model("users", userSchema);
