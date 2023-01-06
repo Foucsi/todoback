@@ -24,14 +24,9 @@ router.get("/:token", function (req, res) {
 
 /* get all users */
 router.get("/", (req, res) => {
-  User.find()
-    .then((data) => {
-      res.json({ result: true, users: data });
-    })
-    .catch((error) => {
-      console.error(error);
-      res.json({ result: false });
-    });
+  User.find({}).then((data) => {
+    res.json(data);
+  });
 });
 /* post a new user */
 
