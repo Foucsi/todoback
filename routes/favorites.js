@@ -6,7 +6,6 @@ const User = require("../models/users");
 
 router.post("/addFavorites/:token", (req, res) => {
   const token = req.params.token;
-  const task = req.params.task;
   const favorites = req.body.favorites;
   User.findOneAndUpdate(
     { token },

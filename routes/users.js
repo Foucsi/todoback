@@ -22,6 +22,17 @@ router.get("/:token", function (req, res) {
     });
 });
 
+/* get all users */
+router.get("/", (req, res) => {
+  User.find()
+    .then((data) => {
+      res.json({ result: true, users: data });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.json({ result: false });
+    });
+});
 /* post a new user */
 
 router.post("/signup", (req, res) => {
